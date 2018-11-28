@@ -74,3 +74,34 @@ The commands are similar on Linux, but the syntax is (unfortunately) a bit diffe
 From here on out, we'll be writing pure functions that operate on lists
 (or arrays, or however you like to handle data in your favorite programming language).
 This stage gives us a way to go from those lists or arrays to actual running code.
+
+
+## How to generate examples of assembly code
+
+It's easier if you start with some programs you'd like to be able to compile.
+
+The simplest way is to write those programs in C and use an existing C
+compiler to generate assembly for you. On a Mac, it's probably easiest to
+install XCode, write a little C program like this:
+
+    ```c
+    // hello.c
+
+    #include <stdio.h>
+
+    int main() {
+        puts("hello microcompiler world");
+        return 0;
+    }
+    ```
+
+Then use this command: `clang++ -O2 -fomit-frame-pointer -S hello.c`
+
+*   `-O2` means optimize aggressively.
+    This makes the compiler generate far fewer instructions,
+    so the output is usually much easier to understand.
+
+*   `-fomit-frame-pointer` means generate even fewer instructions.
+
+*   `-S` means, produce assembly as text (in a file `hello.s`)
+    rather than a complete executable.
