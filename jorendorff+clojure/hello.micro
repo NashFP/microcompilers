@@ -1,0 +1,14 @@
+;; -*- Clojure -*-
+
+((.text)
+ (.globl _main :# "-- Begin function main")
+ (.label _main)
+ (pushq :%rax)
+ (leaq	[L_.str :%rip] :%rdi)
+ (callq	_puts)
+ (xorl	:%eax :%eax)
+ (popq :%rcx)
+ (retq)
+
+ (.label L_.str)
+ (.asciz "hello world"))

@@ -1,0 +1,17 @@
+#!/bin/bash
+# microc - Tiny script to run the whole pipeline as one thing
+
+set -e
+
+if [ "x$1" == "x" ]; then
+    echo "usage: microc FILE.micro" > /dev/stderr
+    exit 1
+fi
+
+PROGRAM=$(echo $1 | sed -e 's/\.micro$//')
+
+# There are already three stages in the pipeline right now!
+# Two of them are provided by the system, though.
+clojure assemble.clj < ${PROGRAM}.micro > ${PROGRAM}.s
+as ${PROGRAM}.s -o ${PROGRAM}.o
+ld -macosx_version_min 10.14 -lc ${PROGRAM}.o -o ${PROGRAM}
