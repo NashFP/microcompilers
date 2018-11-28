@@ -1,21 +1,20 @@
 (use '[clojure.string :only (join)])
 
-(def registers
-  '{:%rax :%rbx :%rcx :%rdx :%rbp :%rsp :%rsi :%rdi
-    :%r8 :%r9 :%r10 :%r11 :%r12 :%r13 :%r14 :%r15})
+(defn register? [value]
+  (and (symbol? value)
+       (.startsWith (str value) "%")))
 
 (defn reg->str
-  "Convert an x86-64 register from its Clojure form (a keyword) to a string.
-  This strips off the `:` but leaves the `%`."
-  [reg] (subs (str reg) 1))
+  "Convert an x86-64 register from its Clojure form (a keyword) to a string."
+  [reg] (str reg))
 
 (defn operand->str
   "Convert an x86-64 instruction operand from its Clojure form to a string."
   [arg]
   (cond
     (integer? arg) (str "$" arg)
+    (register? arg) (reg->str arg)
     (symbol? arg) (str arg)
-    (keyword? arg) (subs (str arg) 1)
     (vector? arg) (if (and (= (count arg) 2)
                            (or (integer? (first arg))
                                (symbol? (first arg))))
