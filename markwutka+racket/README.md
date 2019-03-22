@@ -27,4 +27,8 @@ a C0 language, which has a few operations similar to C. Finally, another
 pass will take C0 and generate X86 instructions (first a simple set of
 instructions in a language called X860).
 
-
+I'm not sure it is a good idea to check in solutions from the book
+into this repo, since I believe IU and possibly other universities
+are actively teaching from it. The skeleton framework here just defines
+the first few languages mentioned in the book, but does not work
+any of the exercises.
